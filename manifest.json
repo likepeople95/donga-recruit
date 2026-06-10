@@ -1,0 +1,22 @@
+{
+  "name": "동아일보 채용설명회",
+  "short_name": "동아채용",
+  "description": "동아일보 채용설명회 Gallery Mission Rally 2026",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d0520",
+  "theme_color": "#0d0520",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
