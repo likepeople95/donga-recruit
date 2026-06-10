@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>동아일보 채용설명회</title>
+<meta name="theme-color" content="#0d0520">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0520;--surface:#1a0a35;--surface2:#251245;
+  --gold:#ffd700;--gold2:#ffaa00;--purple:#b06aff;--pink:#ff6bd6;--cyan:#60efff;
+  --text:#fff;--text2:rgba(255,255,255,0.75);--text3:rgba(255,255,255,0.35);
+  --yonsei:#4a90d9;--korea:#e05555;--skku:#5db85d;
+}
+html,body{height:100%;background:#000}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--text)}
+#app{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;overflow-x:hidden}
+
+/* 배경 별빛 */
+#app::before{
+  content:'';position:fixed;inset:0;max-width:480px;margin:0 auto;
+  background:
+    radial-gradient(ellipse at 20% 20%,rgba(176,106,255,0.15) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 80%,rgba(255,107,214,0.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(96,239,255,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* 파티클 효과 */
+.particle{position:fixed;pointer-events:none;z-index:0;font-size:12px;opacity:0;animation:float-particle linear infinite}
+@keyframes float-particle{0%{opacity:0;transform:translateY(100vh) rotate(0deg)}10%{opacity:0.6}90%{opacity:0.3}100%{opacity:0;transform:translateY(-100px) rotate(360deg)}}
+
+/* ── 헤더 ── */
+.header{
+  background:linear-gradient(180deg,rgba(37,18,69,0.95) 0%,rgba(13,5,32,0.8) 100%);
+  border-bottom:1px solid rgba(255,215,0,0.3);
+  padding:12px 16px;position:relative;z-index:1;
+  text-align:center;
+}
+.header::after{content:'✦ ✦ ✦';position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,215,0,0.3);letter-spacing:8px}
+.header-crown{font-size:20px;margin-bottom:2px}
+.header-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--gold);text-shadow:0 0 10px rgba(255,215,0,0.5),0 0 20px rgba(255,215,0,0.3);letter-spacing:1px}
+.header-sub{font-size:9px;color:var(--purple);letter-spacing:3px;margin-top:2px;text-shadow:0 0 6px var(--purple)}
+
+/* ── 로그인 ── */
+.login-wrap{padding:20px 20px;position:relative;z-index:1}
+.story-box{
+  background:linear-gradient(135deg,rgba(37,18,69,0.9),rgba(26,10,53,0.9));
+  border:1px solid rgba(255,215,0,0.4);
+  border-radius:4px;
+  padding:20px;
+  margin-bottom:20px;
+  position:relative;
+  text-align:center;
+}
+.story-box::before,.story-box::after{content:'';position:absolute;width:12px;height:12px;border-color:var(--gold);border-style:solid;opacity:0.6}
+.story-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.story-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.story-num{font-size:11px;color:var(--gold2);letter-spacing:3px;margin-bottom:8px;text-shadow:0 0 6px var(--gold2)}
+.story-main{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.story-main em{color:var(--gold);font-style:normal;text-shadow:0 0 8px var(--gold)}
+.story-sub{font-size:12px;color:var(--text2);line-height:1.7}
+.story-sub strong{color:var(--purple);text-shadow:0 0 6px var(--purple)}
+
+.quest-box{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,215,0,0.2);
+  border-radius:4px;
+  padding:16px;
+  margin-bottom:16px;
+}
+.quest-label{font-size:10px;color:var(--gold2);letter-spacing:2px;margin-bottom:8px;display:block}
+.rpg-input{
+  width:100%;padding:12px 14px;
+  border:1px solid rgba(255,215,0,0.3);
+  background:rgba(255,255,255,0.05);
+  font-size:15px;font-family:'Noto Sans KR',sans-serif;
+  color:var(--text);margin-bottom:16px;outline:none;
+  -webkit-appearance:none;border-radius:2px;
+  transition:all 0.2s;
+}
+.rpg-input:focus{border-color:var(--gold);background:rgba(255,215,0,0.05);box-shadow:0 0 8px rgba(255,215,0,0.2)}
+.rpg-input::placeholder{color:var(--text3)}
+.school-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.school-card{
+  padding:12px 4px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px;cursor:pointer;
+  font-size:11px;font-weight:700;color:var(--text2);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  -webkit-tap-highlight-color:transparent;transition:all 0.15s;
+}
+.school-card img{width:40px;height:40px;object-fit:contain;border-radius:50%;filter:brightness(0.85)}
+.school-card.selected{border-color:var(--gold);background:rgba(255,215,0,0.08);color:var(--gold);box-shadow:0 0 10px rgba(255,215,0,0.2)}
+.school-card.selected img{filter:none;box-shadow:0 0 8px rgba(255,215,0,0.4)}
+.school-card-sub{font-size:9px;opacity:0.5;font-weight:400}
+.login-hint{font-size:12px;color:var(--pink);text-align:center;min-height:16px;margin:8px 0;text-shadow:0 0 6px var(--pink)}
+.rpg-btn{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,#8b4fff,#ff6bd6);
+  color:white;border:none;border-radius:4px;
+  font-family:'Noto Serif KR',serif;
+  font-size:16px;font-weight:700;cursor:pointer;
+  letter-spacing:1px;opacity:0.3;transition:all 0.2s;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 0 rgba(0,0,0,0.4);
+}
+.rpg-btn.ready{opacity:1;box-shadow:0 4px 0 #5a1fb0,0 0 20px rgba(176,106,255,0.4)}
+.rpg-btn.ready:active{transform:translateY(3px);box-shadow:0 1px 0 #5a1fb0}
+.rpg-btn::after{content:'⚔';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:18px;opacity:0.7}
+
+/* ── 토스트 ── */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  color:var(--text);padding:11px 20px;
+  border:1px solid rgba(255,215,0,0.4);
+  font-size:13px;z-index:300;white-space:nowrap;
+  animation:toastUp 0.3s ease,toastOut 0.3s ease 2.2s forwards;
+  box-shadow:0 0 12px rgba(255,215,0,0.2);
+  border-radius:4px;
+}
+@keyframes toastUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0}}
+
+/* ── 유저바 ── */
+.user-bar{
+  background:rgba(37,18,69,0.95);border-bottom:1px solid rgba(255,215,0,0.2);
+  padding:9px 14px;display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:1;
+}
+.user-name-text{font-family:'Noto Serif KR',serif;font-size:13px;font-weight:700;color:var(--gold);text-shadow:0 0 6px rgba(255,215,0,0.4)}
+.school-badge{padding:3px 10px;font-size:11px;font-weight:700;color:white;display:flex;align-items:center;gap:4px;border-radius:3px}
+.badge-yonsei{background:var(--yonsei)}.badge-korea{background:var(--korea)}.badge-skku{background:var(--skku)}
+.school-badge img{width:14px;height:14px;border-radius:50%;object-fit:contain;background:white;padding:1px}
+.btn-home-rpg{padding:5px 12px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:3px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+
+/* ── 카메라 안내 ── */
+.camera-guide{
+  background:linear-gradient(90deg,rgba(176,106,255,0.15),rgba(96,239,255,0.1));
+  padding:11px 16px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(255,215,0,0.15);position:relative;z-index:1;
+}
+.camera-guide-text{font-size:12px;color:var(--text2);line-height:1.6}
+.camera-guide-text strong{display:block;font-size:13px;color:var(--cyan);text-shadow:0 0 6px var(--cyan)}
+
+/* ── 홈 메뉴 ── */
+.home-section{padding:16px;position:relative;z-index:1}
+.home-chapter{font-size:10px;color:var(--gold2);letter-spacing:3px;margin-bottom:6px;text-shadow:0 0 4px var(--gold2)}
+.home-greeting{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3}
+.home-greeting em{color:var(--gold);font-style:normal;text-shadow:0 0 6px var(--gold)}
+.home-sub{font-size:11px;color:var(--text2);margin-bottom:18px}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.menu-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:6px;padding:16px 12px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all 0.15s;
+  position:relative;overflow:hidden;
+}
+.menu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.3),transparent)}
+.menu-card:active{transform:scale(0.96)}
+.menu-card.quest-card{border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.06)}
+.menu-card.skill-card{border-color:rgba(176,106,255,0.2);background:rgba(176,106,255,0.06)}
+.menu-card.map-card{border-color:rgba(96,239,255,0.2);background:rgba(96,239,255,0.06)}
+.menu-card.scroll-card{border-color:rgba(255,107,214,0.2);background:rgba(255,107,214,0.06)}
+.menu-icon{font-size:24px;margin-bottom:8px;display:block}
+.menu-title{font-family:'Noto Serif KR',serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.menu-desc{font-size:10px;color:var(--text2);line-height:1.5}
+
+/* ── 스탬프 (미션) ── */
+.stamp-section{padding:16px;position:relative;z-index:1}
+.quest-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.quest-label-txt{font-size:10px;color:var(--gold2);letter-spacing:2px}
+.quest-count{font-size:12px;font-weight:700;color:var(--gold);text-shadow:0 0 4px var(--gold)}
+.pbar{height:4px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:14px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:4px;transition:width 0.5s ease;box-shadow:0 0 6px var(--purple)}
+.pfill.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 6px var(--gold)}
+.stamp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
+.stamp-cell{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:4px;border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);cursor:pointer;position:relative;
+  -webkit-tap-highlight-color:transparent;transition:all 0.2s;
+}
+.stamp-cell:not(.done):active{transform:scale(0.88)}
+.stamp-cell.done{
+  border-color:var(--gold);background:rgba(255,215,0,0.1);
+  box-shadow:0 0 10px rgba(255,215,0,0.3);
+  animation:stampIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.stamp-cell svg{width:52%;height:52%}
+.stamp-cell:not(.done) svg{opacity:0.15}
+.stamp-cell.done svg path,.stamp-cell.done svg rect,.stamp-cell.done svg circle,.stamp-cell.done svg line,.stamp-cell.done svg polyline,.stamp-cell.done svg polygon{stroke:var(--gold)}
+.stamp-num{position:absolute;bottom:2px;right:4px;font-size:9px;color:var(--text3)}
+.stamp-cell.done .stamp-num{color:rgba(255,215,0,0.4)}
+@keyframes stampIn{0%{transform:scale(0.3) rotate(-15deg);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.quest-divider{border:none;border-top:1px solid rgba(255,215,0,0.1);margin:4px 0 14px}
+.stamp-grid-lec{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.stamp-cell-lec{
+  aspect-ratio:2.4/1;display:flex;align-items:center;justify-content:center;
+  gap:6px;border-radius:4px;border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);font-size:12px;font-weight:700;
+  color:var(--text3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all 0.15s;
+}
+.stamp-cell-lec:active{transform:scale(0.95)}
+.stamp-cell-lec.done{border-color:var(--purple);background:rgba(176,106,255,0.15);color:var(--purple);box-shadow:0 0 8px rgba(176,106,255,0.3)}
+
+/* 랭킹 버튼 */
+.ranking-btn-wrap{padding:0 16px 4px;position:relative;z-index:1}
+.ranking-btn{
+  width:100%;padding:11px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,215,0,0.2);
+  border-radius:4px;font-size:13px;font-weight:700;color:var(--gold);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  gap:6px;transition:all 0.15s;font-family:'Noto Sans KR',sans-serif;
+  text-shadow:0 0 4px rgba(255,215,0,0.4);
+}
+.ranking-btn:active{background:rgba(255,215,0,0.1);border-color:var(--gold)}
+
+/* ── 팝업 ── */
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:20px}
+.confirm-overlay.show{display:flex}
+.confirm-box{
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid rgba(255,215,0,0.4);border-radius:6px;
+  padding:28px 24px;width:100%;max-width:320px;text-align:center;
+  box-shadow:0 0 30px rgba(176,106,255,0.2);
+}
+.confirm-title{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:8px;text-shadow:0 0 6px rgba(255,215,0,0.4)}
+.confirm-sub{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.7}
+.confirm-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cbtn-cancel{padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:4px;font-size:14px;cursor:pointer;color:var(--text2);font-family:'Noto Sans KR',sans-serif}
+.cbtn-ok{padding:12px;background:linear-gradient(135deg,#8b4fff,#ff6bd6);border:none;border-radius:4px;font-size:14px;cursor:pointer;color:white;font-weight:700;font-family:'Noto Sans KR',sans-serif;box-shadow:0 0 10px rgba(176,106,255,0.4)}
+
+/* ── 좌석 안내 ── */
+#seat-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:200;max-width:480px;margin:0 auto;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;transform:translateY(100%);transition:transform 0.45s cubic-bezier(0.34,1.1,0.64,1)}
+#seat-screen.show{display:flex;transform:translateY(0)}
+.seat-school-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:4px;color:white;font-size:13px;font-weight:700;margin-bottom:16px}
+.seat-school-badge img{width:20px;height:20px;border-radius:50%;object-fit:contain;background:white;padding:1px}
+.seat-welcome{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:6px;width:100%;text-align:center;text-shadow:0 0 10px rgba(255,215,0,0.5);word-break:keep-all;line-height:1.4}
+.seat-desc{font-size:13px;color:var(--text2);margin-bottom:24px}
+.seat-svg-wrap{width:100%;max-width:300px;margin:0 auto 20px}
+.seat-zone-hint{display:none}
+.seat-enter-btn{width:100%;max-width:300px;padding:14px;border:none;border-radius:4px;font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;cursor:pointer;color:white;box-shadow:0 4px 0 rgba(0,0,0,0.4),0 0 20px rgba(176,106,255,0.4);transition:all 0.15s;letter-spacing:1px}
+.seat-enter-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,0.4)}
+.seat-nickname-box{
+  max-width:300px;width:100%;
+  background:rgba(255,215,0,0.06);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:4px;
+  padding:14px 18px;
+  margin-bottom:16px;
+  text-align:center;
+  position:relative;
+}
+.seat-nickname-box::before,.seat-nickname-box::after{content:'';position:absolute;width:10px;height:10px;border-color:var(--gold);border-style:solid;opacity:0.5}
+.seat-nickname-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.seat-nickname-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.seat-nickname-label{font-size:10px;color:var(--gold2);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;font-family:'Noto Serif KR',serif}
+.seat-nickname-name{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold);text-shadow:0 0 8px rgba(255,215,0,0.5);line-height:1.4}
+.seat-nickname-sub{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6}
+
+/* ── 서브화면 ── */
+.sub-topbar{background:rgba(37,18,69,0.98);color:var(--text);padding:13px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,215,0,0.2)}
+.sub-topbar-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;flex:1;color:var(--gold);text-shadow:0 0 6px rgba(255,215,0,0.3)}
+.sub-close{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;padding:0}
+
+#timetable-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;max-width:480px;margin:0 auto;overflow-y:auto}
+.tt-body{padding:14px}
+.tt-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,215,0,0.15);border-radius:6px;margin-bottom:8px;overflow:hidden}
+.tt-card-header{padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.tt-time{font-size:11px;font-weight:700;color:#000;background:var(--gold);padding:3px 10px;border-radius:3px;white-space:nowrap}
+.tt-session{font-family:'Noto Serif KR',serif;font-size:14px;font-weight:700;color:var(--text)}
+.tt-card-body{padding:10px 14px 12px}
+.tt-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);align-items:flex-start}
+.tt-row:last-child{border-bottom:none}
+.tt-row-label{font-size:10px;color:var(--text3);width:44px;flex-shrink:0;padding-top:2px;letter-spacing:1px}
+.tt-row-val{font-size:13px;color:var(--text2);line-height:1.6;flex:1}
+
+#jokbo-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;max-width:480px;margin:0 auto;flex-direction:column}
+#jokbo-screen.show{display:flex;flex-direction:column}
+.jokbo-body{flex:1;overflow-y:auto;padding:12px}
+.year-tabs{display:flex;gap:6px;margin-bottom:12px}
+.year-tab{flex:1;padding:8px 4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;font-family:'Noto Sans KR',sans-serif}
+.year-tab.active{background:rgba(255,215,0,0.15);border-color:var(--gold);color:var(--gold);text-shadow:0 0 4px rgba(255,215,0,0.4)}
+.jokbo-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,215,0,0.15);border-radius:6px;padding:14px;margin-bottom:8px}
+.jokbo-card-title{font-family:'Noto Serif KR',serif;font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;text-shadow:0 0 4px rgba(255,215,0,0.3)}
+.timeline{display:flex;flex-direction:column}
+.timeline-item{display:flex;gap:12px;position:relative}
+.timeline-item:not(:last-child)::before{content:'';position:absolute;left:13px;top:28px;bottom:0;width:1px;background:rgba(255,215,0,0.2)}
+.tl-dot{width:26px;height:26px;border-radius:50%;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;z-index:1}
+.tl-content{flex:1;padding-bottom:12px}
+.tl-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.tl-date{font-size:11px;color:var(--text2)}
+.result-box{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:6px;padding:14px;display:flex;align-items:center;gap:14px;box-shadow:0 0 10px rgba(255,215,0,0.1)}
+.result-num{font-family:'Noto Serif KR',serif;font-size:44px;font-weight:700;color:var(--gold);text-shadow:0 0 10px var(--gold)}
+.result-label{font-size:13px;color:var(--text2);line-height:1.7}
+.exam-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:14px;margin-bottom:8px}
+.exam-badge{display:inline-block;padding:3px 10px;border-radius:3px;font-size:10px;font-weight:700;margin-bottom:8px;letter-spacing:1px}
+.exam-badge.essay{background:var(--pink);color:white;box-shadow:0 0 6px rgba(255,107,214,0.4)}
+.exam-badge.writing{background:var(--cyan);color:#000;box-shadow:0 0 6px rgba(96,239,255,0.4)}
+.exam-q{font-size:14px;color:var(--text2);line-height:1.9}
+.exam-empty{text-align:center;padding:28px;font-size:13px;color:var(--text3)}
+
+#qna-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;max-width:480px;margin:0 auto;flex-direction:column}
+#qna-screen.show{display:flex}
+.qna-notice{background:rgba(176,106,255,0.1);padding:10px 16px;font-size:12px;color:var(--purple);text-align:center;border-bottom:1px solid rgba(176,106,255,0.2);text-shadow:0 0 4px var(--purple)}
+.qna-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.qna-msg{max-width:85%;padding:10px 14px;font-size:14px;line-height:1.6;word-break:break-word;border-radius:8px}
+.qna-msg.mine{align-self:flex-end;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;border-radius:8px 8px 2px 8px}
+.qna-msg.other{align-self:flex-start;background:rgba(255,255,255,0.06);color:var(--text);border-radius:8px 8px 8px 2px;border:1px solid rgba(255,255,255,0.1)}
+.qna-msg-name{font-size:10px;color:var(--gold);margin-bottom:3px;font-weight:700;letter-spacing:1px;text-shadow:0 0 4px rgba(255,215,0,0.4)}
+.qna-msg-time{font-size:10px;opacity:0.4;margin-top:3px;text-align:right}
+.qna-input-bar{background:rgba(37,18,69,0.98);border-top:1px solid rgba(255,215,0,0.15);padding:10px 12px;display:flex;gap:8px;flex-shrink:0}
+.qna-input{flex:1;padding:10px 14px;border:1px solid rgba(255,215,0,0.2);border-radius:4px;font-family:'Noto Sans KR',sans-serif;font-size:14px;outline:none;background:rgba(255,255,255,0.05);color:var(--text);-webkit-appearance:none}
+.qna-input:focus{border-color:var(--gold)}
+.qna-send{width:44px;height:44px;background:linear-gradient(135deg,var(--purple),var(--pink));border:none;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent;box-shadow:0 0 8px rgba(176,106,255,0.4)}
+.qna-empty{text-align:center;color:var(--text3);padding:40px 20px;font-size:13px;line-height:1.8}
+
+#memo-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;max-width:480px;margin:0 auto;flex-direction:column}
+#memo-screen.show{display:flex}
+.memo-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:10px}
+.memo-textarea{flex:1;width:100%;padding:14px;border:1px solid rgba(255,215,0,0.2);border-radius:6px;font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.8;resize:none;outline:none;background:rgba(255,255,255,0.05);color:var(--text);-webkit-appearance:none}
+.memo-textarea:focus{border-color:var(--gold)}
+.memo-saved{font-size:11px;color:var(--gold);text-align:center;min-height:16px;letter-spacing:2px;text-shadow:0 0 4px rgba(255,215,0,0.4)}
+
+#ranking-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;max-width:480px;margin:0 auto;flex-direction:column}
+#ranking-screen.show{display:flex;flex-direction:column}
+.rank-body{flex:1;overflow-y:auto;padding:14px}
+.rank-section{background:rgba(255,255,255,0.04);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:14px;margin-bottom:10px}
+.rank-section-title{font-family:'Noto Serif KR',serif;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:14px;text-shadow:0 0 4px rgba(255,215,0,0.3)}
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-top:8px}
+.podium-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.podium-medal{font-size:26px;line-height:1}
+.podium-school-img{width:38px;height:38px;border-radius:50%;object-fit:contain;border:2px solid rgba(255,215,0,0.3);background:white}
+.podium-block{width:100%;border-radius:4px 4px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:8px 4px}
+.podium-rank1{background:linear-gradient(180deg,rgba(255,215,0,0.2),rgba(255,215,0,0.05));border:1px solid rgba(255,215,0,0.4);min-height:80px;box-shadow:0 0 12px rgba(255,215,0,0.15)}
+.podium-rank2{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);min-height:56px}
+.podium-rank3{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);min-height:40px}
+.podium-name{font-size:11px;font-weight:700;color:var(--text);text-align:center}
+.podium-avg{font-size:11px;color:var(--gold);text-shadow:0 0 4px rgba(255,215,0,0.4)}
+.podium-count{font-size:10px;color:var(--text3)}
+.rank-list{display:flex;flex-direction:column;gap:4px}
+.rank-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
+.rank-item.me{border-color:var(--gold);background:rgba(255,215,0,0.08);box-shadow:0 0 8px rgba(255,215,0,0.15)}
+.rank-num{font-size:15px;font-weight:700;width:26px;text-align:center;flex-shrink:0;color:var(--text3)}
+.rank-num.top1{color:var(--gold);text-shadow:0 0 6px var(--gold)}
+.rank-num.top2{color:#aaa}.rank-num.top3{color:#cd7f32}
+.rank-nick{font-size:13px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-school{font-size:11px;color:var(--text3)}
+.rank-stamps{font-size:13px;font-weight:700;color:var(--gold);flex-shrink:0;text-shadow:0 0 4px rgba(255,215,0,0.3)}
+.rank-loading{text-align:center;padding:24px;font-size:13px;color:var(--text3)}
+
+/* 완료 화면 */
+.complete-wrap{min-height:100vh;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden}
+.complete-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,215,0,0.1) 0%,transparent 60%)}
+.complete-card{text-align:center;width:100%;position:relative;z-index:1}
+.seal{
+  width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(176,106,255,0.15));
+  border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+  animation:pulse 1.5s ease-in-out infinite alternate;
+  font-size:52px;
+}
+@keyframes pulse{from{box-shadow:0 0 0 0 rgba(255,215,0,0.4),0 0 20px rgba(255,215,0,0.2)}to{box-shadow:0 0 0 18px rgba(255,215,0,0),0 0 40px rgba(255,215,0,0.1)}}
+.c-chapter{font-size:10px;color:var(--gold2);letter-spacing:3px;margin-bottom:8px;text-shadow:0 0 4px var(--gold2)}
+.c-title{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700;color:var(--gold);margin-bottom:4px;text-shadow:0 0 12px rgba(255,215,0,0.5),0 0 24px rgba(255,215,0,0.3)}
+.c-sub-title{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--text2);margin-bottom:6px;font-style:italic}
+.c-div{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto;box-shadow:0 0 6px var(--gold)}
+.c-sub{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.9}
+.c-info{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:18px 24px;font-size:14px;color:var(--text2);margin:0 auto 24px;line-height:2.2;max-width:320px;box-shadow:0 0 12px rgba(255,215,0,0.1)}
+.c-info strong{color:var(--gold);font-family:'Noto Serif KR',serif;text-shadow:0 0 6px rgba(255,215,0,0.4)}
+.btn-confirm{padding:13px 36px;background:linear-gradient(135deg,#8b4fff,#ff6bd6);border:none;border-radius:4px;font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:white;cursor:pointer;letter-spacing:1px;box-shadow:0 4px 0 rgba(0,0,0,0.4),0 0 20px rgba(176,106,255,0.4)}
+.btn-confirm:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,0.4)}
+
+@keyframes fadeInMain{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.main-fadein{animation:fadeInMain 0.4s ease forwards}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="header-crown">👑</div>
+    <div class="header-title">동아일보 채용설명회</div>
+    <div class="header-sub">✦ DONGA ILBO RECRUITMENT 2026 ✦</div>
+    <div style="position:absolute;top:6px;right:10px;font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px">v25</div>
+  </div>
+  <div id="main"></div>
+</div>
+
+<div class="confirm-overlay" id="article-confirm-overlay">
+  <div class="confirm-box">
+    <div style="font-size:28px;margin-bottom:10px">📜</div>
+    <div class="confirm-title" id="article-confirm-title">기사를 확인하시겠습니까?</div>
+    <div class="confirm-sub">동아일보 기사 페이지로 이동합니다</div>
+    <div class="confirm-btns">
+      <button class="cbtn-cancel" onclick="document.getElementById('article-confirm-overlay').classList.remove('show')">닫기</button>
+      <button class="cbtn-ok" onclick="const l=document.getElementById('article-confirm-overlay').dataset.link;document.getElementById('article-confirm-overlay').classList.remove('show');const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);if(isIOS){window.location.href=l;}else{window.open(l,'_blank');}">이동</button>
+    </div>
+  </div>
+</div>
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div style="font-size:28px;margin-bottom:10px">⚠️</div>
+    <div class="confirm-title">처음으로 돌아가시겠습니까?</div>
+    <div class="confirm-sub">모든 미션 기록이 초기화됩니다.</div>
+    <div class="confirm-btns">
+      <button class="cbtn-cancel" onclick="hideConfirm()">계속하기</button>
+      <button class="cbtn-ok" onclick="resetAll()">처음으로</button>
+    </div>
+  </div>
+</div>
+
+<div id="seat-screen">
+  <div class="seat-school-badge" id="seat-badge"></div>
+  <div class="seat-welcome" id="seat-welcome"></div>
+  <div class="seat-desc" id="seat-desc"></div>
+  <div class="seat-svg-wrap" id="seat-svg"></div>
+  <div class="seat-zone-hint" id="seat-zone-hint"></div>
+  <div class="seat-nickname-box" id="seat-nickname-box"></div>
+  <button class="seat-enter-btn" id="seat-enter-btn" onclick="enterMain()"></button>
+</div>
+
+<div id="timetable-screen">
+  <div class="sub-topbar"><button class="sub-close" onclick="closeTimetable()">✕</button><div class="sub-topbar-title">📅 시간표</div></div>
+  <div class="tt-body" id="tt-body"></div>
+</div>
+<div id="jokbo-screen">
+  <div class="sub-topbar"><button class="sub-close" onclick="closeJokbo()">✕</button><div class="sub-topbar-title">📚 채용족보</div></div>
+  <div class="jokbo-body"><div class="year-tabs" id="year-tabs"></div><div id="jokbo-content"></div></div>
+</div>
+<div id="qna-screen">
+  <div class="sub-topbar"><button class="sub-close" onclick="closeQnA()">✕</button><div class="sub-topbar-title">💬 실시간 Q&A</div></div>
+  <div class="qna-notice">✨ 질문을 남겨주시면 선배들이 Q&A 시간에 답변해드립니다</div>
+  <div class="qna-messages" id="qna-messages"><div class="qna-empty">질문을 입력하면 실시간으로 답변해드려요</div></div>
+  <div class="qna-input-bar">
+    <input class="qna-input" id="qna-input" type="text" placeholder="질문을 입력하세요..." maxlength="300" autocomplete="off">
+    <button class="qna-send" onclick="sendQnA()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
+<div id="memo-screen">
+  <div class="sub-topbar"><button class="sub-close" onclick="closeMemo()">✕</button><div class="sub-topbar-title">📝 메모장</div></div>
+  <div class="memo-body"><textarea class="memo-textarea" id="memo-textarea" placeholder="강의 내용을 자유롭게 기록하세요." oninput="autoSaveMemo()"></textarea><div class="memo-saved" id="memo-saved"></div></div>
+</div>
+<div id="ranking-screen">
+  <div class="sub-topbar"><button class="sub-close" onclick="closeRanking()">✕</button><div class="sub-topbar-title">🏆 실시간 랭킹</div></div>
+  <div class="rank-body">
+    <div class="rank-section"><div class="rank-section-title">🏫 학교별 순위 (평균 스탬프)</div><div id="school-chart"><div class="rank-loading">불러오는 중...</div></div></div>
+    <div class="rank-section"><div class="rank-section-title">👤 개인 순위</div><div class="rank-list" id="personal-list"><div class="rank-loading">불러오는 중...</div></div></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyCLoPPcte1rpKAwwr52CknNqqxxQgywT2k",authDomain:"donga-hr.firebaseapp.com",databaseURL:"https://donga-hr-default-rtdb.firebaseio.com",projectId:"donga-hr",storageBucket:"donga-hr.firebasestorage.app",messagingSenderId:"598489004361",appId:"1:598489004361:web:6754d1f499db63c30dc298"});
+window._db=firebase.database();
+const LS_KEY='donga_rally_2025';
+const NICKNAMES=['열정가득 현장기자','밤새는 특파원','부장님의 애제자','카페인충전 마감기자','눈빛날카로운 취재왕','신입인척 베테랑','특종을노리는 탐정기자','밥은먹었나 현장르포','마감5분전 뉴스헌터','잠못자는 조간기자','커피세잔째 편집장','독점취재 전문기자','노트북들고뛰는 특파원','팩트만말하는 진실탐정','카메라메고달리는 기자','오늘도야근 마감전사','세상을바꾸는 펜끝','질문폭격 인터뷰어','현장냄새나는 르포기자','특종하나만 기다리는 헌터','사진찍는 현장기자','독자를위한 진실추적자','새벽네시 조간담당','호외호외 속보기자','날카로운질문 팩트체커','마이크잡은 현장기자','취재수첩꽉찬 베테랑','기사쓰는 야행성동물','편집국의 新예비기자','첫발내딛는 언론인','꿈꾸는 특종헌터','뉴스를만드는 사람','현장누비는 탐험기자','글쓰는 밤의전사','진실을캐는 두더지기자','독점입수 단독기자','오늘의헤드라인 작성자','커피한잔의 마감여유','취재현장 돌격대장','부장몰래쓰는 특종','뉴스룸의 막내기자','데스크에서날아온 특파원','취재가좋은 길치기자','렌즈너머 세상기자','질문하나로 승부하는 기자','노트한권다쓴 현장맨','인터뷰의달인 소통왕','기사한줄에올인 뉴스쟁이','헤드라인장인 편집러','취재현장 신출내기','마감벨울리는 뉴스요정'];
+const STAMPS=[{id:'camera',label:'지폐',code:'DONGA_EXHIBIT_1',link:'https://www.donga.com/news/Society/article/all/20240623/125574152/1'},{id:'drone',label:'무인기',code:'DONGA_EXHIBIT_2',link:'https://www.donga.com/news/Society/article/all/20250702/131921510/2'},{id:'newspaper',label:'신문',code:'DONGA_EXHIBIT_3',link:'https://www.donga.com/news/Society/article/all/20250124/130926573/1'},{id:'pen',label:'펜',code:'DONGA_EXHIBIT_4',link:'https://www.donga.com/news/Society/article/all/20240617/125459793/2'},{id:'phone',label:'카메라',code:'DONGA_EXHIBIT_5',link:'https://www.donga.com/news/Politics/article/all/20220726/114667059/1'},{id:'gun',label:'총',code:'DONGA_EXHIBIT_6',link:'https://www.donga.com/news/Politics/article/all/20230224/118049117/1'},{id:'building',label:'아파트',code:'DONGA_EXHIBIT_7',link:'https://www.donga.com/news/Society/article/all/20250122/130917576/1'},{id:'star',label:'별',code:'DONGA_EXHIBIT_8',link:'https://www.donga.com/news/Society/article/all/20251016/132570331/2'}];
+const LECTURES=[{id:'lec1',label:'MY DONGA',code:'DONGA_LECTURE_1',link:''},{id:'lec2',label:'MY LIFE',code:'DONGA_LECTURE_2',link:''},{id:'lec3',label:'MY HERO',code:'DONGA_LECTURE_3',link:''},{id:'lec4',label:'MY STORY',code:'DONGA_LECTURE_4',link:''}];
+const ICONS={camera:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" stroke="none">₩</text></svg>`,drone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 L12 18 L20 6"/></svg>`,newspaper:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><polyline points="14 2 14 8 20 8"/><path d="M2 15h10"/><path d="M2 11h3"/><path d="M2 19h10"/></svg>`,pen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,phone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,gun:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><rect x="10" y="4" width="4" height="5" rx="1"/><path d="M14 6 Q18 2 16 0"/></svg>`,building:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="4" y1="22" x2="20" y2="22"/><rect x="7" y="5" width="3" height="3"/><rect x="14" y="5" width="3" height="3"/><rect x="7" y="11" width="3" height="3"/><rect x="14" y="11" width="3" height="3"/><rect x="9" y="16" width="6" height="6"/></svg>`,star:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>`};
+const SCHOOL_DATA={yonsei:{label:'연세대',sub:'춘추화백실',img:'yonsei.jpg',badgeClass:'badge-yonsei',color:'#4a90d9'},korea:{label:'고려대',sub:'KUMA',img:'korea.gif',badgeClass:'badge-korea',color:'#e05555'},skku:{label:'성균관대',sub:'예필재',img:'skku.jpg',badgeClass:'badge-skku',color:'#5db85d'}};
+const TIMETABLE=[{time:'13:00~13:10',chapter:'CHAPTER 1',session:'오프닝',speaker:'인사팀장',items:['회사소개 및 참석자 소개']},{time:'13:10~13:30',chapter:'CHAPTER 2',session:'전형소개',speaker:'인사팀 매니저',items:['채용절차. 인턴과정','Back to the 20s소개']},{time:'13:30~14:30',chapter:'CHAPTER 3',session:'직무소개',speaker:'편집국 기자',items:['동아일보 기자의 하루 일과','부서별 업무 소개']},{time:'14:30~15:30',chapter:'CHAPTER 4',session:'히어로콘텐츠',speaker:'히어로콘텐츠 리더',items:['히어로콘텐츠 기획, 취재기']},{time:'15:30~16:30',chapter:'CHAPTER 5',session:'선배와의 이야기',speaker:'저연차 기자',items:['언론고시 준비과정','동아일보 인턴과정 소개']},{time:'16:30~',chapter:'FINAL CHAPTER',session:'Q & A',speaker:'-',items:[]}];
+const JOKBO={2025:{timeline:[{emoji:'📋',title:'지원서 접수',date:'8/18(월) ~ 9/1(월)',desc:''},{emoji:'✏️',title:'필기시험',date:'9/13(토)',desc:''},{emoji:'🗣️',title:'면접전형',date:'9/26(금)',desc:''},{emoji:'🏢',title:'인턴활동',date:'10/13(월) ~ 11/21(금)',desc:''},{emoji:'🎉',title:'최종입사',date:'12/8(월)',desc:''}],hired:'7',exam:{essay:'내년 정부 예산안은 728조 원 규모로 편성됐습니다. 올해 본예산보다 55조 늘어났고, 8.1% 증가한 것입니다. 저성장의 늪에 빠진 경제를 살리기 위해 확장재정정책을 펼 수밖에 없다는 것이 현 정부의 생각입니다.<br><br>하지만 야당은 지나친 확장 재정은 재정중독을 부를 수 있고, 빠르게 늘어난 나라빚은 결국 미래 세대가 다 갚아야 하는 부담이라고 주장합니다.<br><br>현재 국내외 경제 상황을 감안할 때 여러분이 생각하는 적정한 재정편성 방식은 무엇입니까.',writing:'123'}},2024:{timeline:[{emoji:'📋',title:'지원서 접수',date:'8/12(월) ~ 8/26(월)',desc:''},{emoji:'✏️',title:'필기시험',date:'9/7(토)',desc:''},{emoji:'🗣️',title:'면접전형',date:'9/21(토)',desc:''},{emoji:'🏢',title:'인턴활동',date:'9/30(월) ~ 11/8(금)',desc:''},{emoji:'🎉',title:'최종입사',date:'11/25(월)',desc:''}],hired:'8',exam:{essay:'최근 수십 년간 바뀌지 않은 상속세 부과 기준을 손봐야 한다는 여론이 일고 있습니다. 여야 모두 중산층 감세는 필요하다는 쪽으로 의견이 모이고 있습니다.<br><br>반면 대기업을 포함한 고소득층 과세에 대해 여당은 최고세율 인하, 최대 주주할증 폐지 등을 주장하고 있고 야당은 이에 \'부자 감세\'라며 반대하는 상황입니다.<br><br>바람직한 상속세 개편 방향은 어떤 것이라고 생각하는지 기술하시오.',writing:'화'}},2023:{timeline:[{emoji:'📋',title:'지원서 접수',date:'8/7(월) ~ 8/21(월)',desc:''},{emoji:'✏️',title:'필기시험',date:'9/2(토)',desc:''},{emoji:'🗣️',title:'면접전형',date:'9/16(토)',desc:''},{emoji:'🏢',title:'인턴활동',date:'10/4(목) ~ 11/16(목)',desc:''},{emoji:'🎉',title:'최종입사',date:'12/4(월)',desc:''}],hired:'7',exam:{essay:'최근 \'이상동기 범죄(묻지마 범죄)\'가 잇따라 발생하면서 중증 정신질환자 관리에 대한 관심이 높아지는 가운데, 정부는 법원의 판단으로 정신질환자를 입원시키는 \'사법입원제\' 도입을 추진하겠다고 밝혔다.<br><br>이를 놓고 정신질환자의 인권을 침해할 우려가 있고, 판사의 업무가 가중될 수 있다는 반론도 나오고 있다.<br><br>사법입원제 도입에 대한 찬반 의견과 그 이유를 서술해주시오.',writing:'AI'}},2022:{timeline:[{emoji:'📋',title:'지원서 접수',date:'8/11(목) ~ 8/25(목)',desc:''},{emoji:'✏️',title:'필기시험',date:'9/3(토)',desc:''},{emoji:'🗣️',title:'면접전형',date:'9/18(일)',desc:''},{emoji:'🏢',title:'인턴활동',date:'9/26(월) ~ 11/9(수)',desc:''},{emoji:'🎉',title:'최종입사',date:'12/5(월)',desc:''}],hired:'7',exam:{essay:'\'수원 세 모녀\' 사건을 계기로 당사자가 신청해야만 혜택을 받을 수 있는 \'복지 신청주의\'를 둘러싸고 논란이 벌어지는 중이다.<br><br>신청주의의 장점과 단점에 대해 서술하고, 현 단계에서 이를 유지하는 것과 폐지하는 것 중 어떤 방안이 바람직한지 논하시오.',writing:'관'}},2021:{timeline:[{emoji:'📋',title:'지원서 접수',date:'7/21(수) ~ 8/2(월)',desc:''},{emoji:'✏️',title:'필기시험',date:'8/14(토)',desc:''},{emoji:'🗣️',title:'면접전형',date:'8/22(일)',desc:''},{emoji:'🏢',title:'인턴활동',date:'9/6(월) ~ 10/29(금)',desc:''},{emoji:'🎉',title:'최종입사',date:'11/17(수)',desc:''}],hired:'6',exam:{essay:'국민 재난지원금을 지급하는 방안으로 다음 3가지가 있다고 하자.<br>1안은 전 국민에게 지급하는 방안, 2안은 하위 70%에 지급하는 방안, 3안은 하위 40%에 지급하는 방안이다.<br><br>올 연말경 지급하는 것을 상정할 경우 어느 방안이 가장 바람직한 방안이라고 생각하는지 밝히고 그 이유를 논술하시오.',writing:'문제1) 주어진 자료를 1건 이상 활용해 뉴스 가치가 있다고 생각하는 주제와 통계를 포함한 1400자 분량의 기사를 제목과 함께 작성해 주세요.<br><br>문제2) 위 기사를 알기 쉽게 전달할 수 있는 인포그래픽을 제출해 주세요.<br><br>문제3) 위 기사의 부가가치를 높일 취재 계획을 200자 이내로 작성해 주세요.<br>※취재원이나 현장 등 추가 취재 대상과 함께 인터뷰, 르포 등 계획하는 취재 방식을 구체적으로 설명해 주세요.',writingLabel:'기본실무역량 평가'}}};
+
+let user={name:'',school:''};
+let state={exhibit:new Array(8).fill(false),lecture:new Array(4).fill(false)};
+let currentYear=2025;
+
+function save(){try{localStorage.setItem(LS_KEY,JSON.stringify({user,exhibit:state.exhibit,lecture:state.lecture}));}catch(e){}}
+function load(){try{const r=localStorage.getItem(LS_KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
+function clearSave(){try{localStorage.removeItem(LS_KEY);}catch(e){}}
+function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
+function getOrCreateNickname(){const key='donga_nickname_'+user.name+user.school;let nick='';try{nick=localStorage.getItem(key)||'';}catch(e){}if(!nick){let hash=0;const seed=user.name+user.school;for(let i=0;i<seed.length;i++)hash=(hash*31+seed.charCodeAt(i))%NICKNAMES.length;nick=NICKNAMES[Math.abs(hash)];try{localStorage.setItem(key,nick);}catch(e){}}return nick;}
+
+function init(){const saved=load();if(saved&&saved.user&&saved.user.name&&saved.user.school){user=saved.user;state.exhibit=saved.exhibit||new Array(8).fill(false);state.lecture=saved.lecture||new Array(4).fill(false);const total=state.exhibit.filter(Boolean).length+state.lecture.filter(Boolean).length;renderHome();setTimeout(()=>showToast('⚔ 용사 '+user.name+'님, 귀환을 환영합니다 ('+total+'/'+(STAMPS.length+LECTURES.length)+')'),300);}else{renderLogin();}checkURLQR();}
+
+function renderLogin(){user={name:'',school:''};document.getElementById('main').innerHTML=`<div class="login-wrap"><div class="story-box"><div class="story-num">언론고시반과 함께하는 동아일보 채용설명회</div><div class="story-main">이번 생은 반드시<br><em>동아일보 기자</em>가 되어드리죠</div><div class="story-sub">예비 기자님, 당신의 이름과<br>소속 학교를 알려주십시오</div></div><div class="quest-box"><label class="quest-label">⚔ 성함 (이름)</label><input class="rpg-input" id="inp-name" type="text" placeholder="이름을 입력하세요" oninput="checkReady()" autocomplete="off"><label class="quest-label">🏰 소속 언론고시반(학교)</label><div class="school-grid">${Object.entries(SCHOOL_DATA).map(([k,v])=>`<button class="school-card ${k}" id="sb-${k}" onclick="selectSchool('${k}')"><img src="${v.img}" alt="${v.label}" style="${k==='korea'?'background:white;border-radius:50%;padding:2px;':''}""><span>${v.label}</span><span class="school-card-sub">${v.sub}</span></button>`).join('')}</div></div><div class="login-hint" id="login-btn-hint"></div><button class="rpg-btn" id="login-btn" onclick="onLoginBtnClick()">채용설명회 입장하기</button></div>`;}
+
+function selectSchool(k){user.school=k;document.querySelectorAll('.school-card').forEach(b=>b.classList.remove('selected'));document.getElementById('sb-'+k).classList.add('selected');checkReady();}
+function checkReady(){const name=(document.getElementById('inp-name').value||'').trim();const btn=document.getElementById('login-btn');if(name&&user.school)btn.classList.add('ready');else btn.classList.remove('ready');const hint=document.getElementById('login-btn-hint');if(hint)hint.textContent='';}
+function onLoginBtnClick(){const name=(document.getElementById('inp-name').value||'').trim();const hint=document.getElementById('login-btn-hint');if(!name&&!user.school){if(hint)hint.textContent='이름과 길드를 선택해 주십시오';}else if(!name){if(hint)hint.textContent='성함을 입력해 주십시오';}else if(!user.school){if(hint)hint.textContent='소속 길드를 선택해 주십시오';}else doLogin();}
+function doLogin(){const name=(document.getElementById('inp-name').value||'').trim();if(!name||!user.school)return;user.name=name;state={exhibit:new Array(8).fill(false),lecture:new Array(4).fill(false)};save();showSeatScreen();}
+
+function showSeatScreen(){const sd=SCHOOL_DATA[user.school];const imgMap={yonsei:'yonsei.jpg',korea:'korea.gif',skku:'skku.jpg'};const el=document.getElementById('seat-badge');el.style.background=sd.color;el.style.display='flex';el.style.alignItems='center';el.style.gap='8px';el.innerHTML='<img src="'+imgMap[user.school]+'" style="width:20px;height:20px;border-radius:50%;object-fit:contain;background:white;padding:1px"> '+sd.label+' · '+sd.sub;document.getElementById('seat-welcome').textContent=user.name+'님의 자리를 안내해드립니다';document.getElementById('seat-desc').textContent='아래 좌석 배치도를 확인해주세요';const cx=160,cy=145,R=128,r=52;function pt(cx,cy,radius,deg){const rad=deg*Math.PI/180;return[cx+radius*Math.cos(rad),cy+radius*Math.sin(rad)];}const a1=180,a2=240,a3=300,a4=360;function sector(a_start,a_end,fillColor,steps){steps=steps||20;let d='';const[ox1,oy1]=pt(cx,cy,r,a_start);const[ox2,oy2]=pt(cx,cy,R,a_start);d+='M '+ox1+' '+oy1+' L '+ox2+' '+oy2+' ';for(let i=1;i<=steps;i++){const a=a_start+(a_end-a_start)*i/steps;const[px,py]=pt(cx,cy,R,a);d+='L '+px+' '+py+' ';}const[ix2,iy2]=pt(cx,cy,r,a_end);d+='L '+ix2+' '+iy2+' ';for(let i=1;i<=steps;i++){const a=a_end+(a_start-a_end)*i/steps;const[px,py]=pt(cx,cy,r,a);d+='L '+px+' '+py+' ';}d+='Z';return'<path d="'+d+'" fill="'+fillColor+'" stroke="#0d0520" stroke-width="3"/>';}function textAt(cx,cy,R,r,a_start,a_end,lines,color){const aMid=(a_start+a_end)/2;const rMid=(R+r)/2;const[tx,ty]=pt(cx,cy,rMid,aMid);let res='';const lineH=15;const startY=ty-(lines.length-1)*lineH/2;lines.forEach((line,i)=>{const fw=i===0?'700':'400';const fs=i===0?12:10;res+='<text x="'+tx+'" y="'+(startY+i*lineH)+'" text-anchor="middle" font-size="'+fs+'" font-weight="'+fw+'" fill="'+color+'" font-family="sans-serif">'+line+'</text>';});return res;}const gray='rgba(255,255,255,0.08)';const yFill=user.school==='yonsei'?'rgba(74,144,217,0.4)':gray;const kFill=user.school==='korea'?'rgba(224,85,85,0.4)':gray;const sFill=user.school==='skku'?'rgba(93,184,93,0.4)':gray;const yTxt=user.school==='yonsei'?'#4a90d9':'rgba(255,255,255,0.25)';const kTxt=user.school==='korea'?'#e05555':'rgba(255,255,255,0.25)';const sTxt=user.school==='skku'?'#5db85d':'rgba(255,255,255,0.25)';const svg='<svg viewBox="0 0 320 230" xmlns="http://www.w3.org/2000/svg">'+sector(a1,a2,yFill)+sector(a2,a3,kFill)+sector(a3,a4,sFill)+textAt(cx,cy,R,r,a1,a2,['연세대','춘추화백실'],yTxt)+textAt(cx,cy,R,r,a2,a3,['고려대','KUMA'],kTxt)+textAt(cx,cy,R,r,a3,a4,['성균관대','예필재'],sTxt)+'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#1a0a35" stroke="rgba(255,215,0,0.3)" stroke-width="2"/><text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="10" fill="rgba(255,215,0,0.5)" font-family="sans-serif">강단</text><rect x="95" y="'+(cy+r+6)+'" width="130" height="28" rx="4" fill="#251245" stroke="rgba(255,215,0,0.3)"/><text x="160" y="'+(cy+r+24)+'" text-anchor="middle" font-size="12" font-weight="700" fill="rgba(255,215,0,0.6)" font-family="sans-serif">LED 화면</text></svg>';document.getElementById('seat-svg').innerHTML=svg;document.getElementById('seat-zone-hint').style.display='none';
+  const nick=getOrCreateNickname();
+  document.getElementById('seat-nickname-box').innerHTML='<div class="seat-nickname-label">✦ 오늘의 당신은 ✦</div><div class="seat-nickname-name">'+nick+'</div><div class="seat-nickname-sub">이(가) 됩니다</div>';const btnEl=document.getElementById('seat-enter-btn');btnEl.style.background='linear-gradient(135deg,#8b4fff,#ff6bd6)';btnEl.textContent='✓ 확인';const seatEl=document.getElementById('seat-screen');seatEl.style.display='flex';requestAnimationFrame(()=>requestAnimationFrame(()=>seatEl.classList.add('show')));}
+
+function enterMain(){const seatEl=document.getElementById('seat-screen');seatEl.style.transform='translateY(100%)';seatEl.style.transition='transform 0.35s ease-in';setTimeout(()=>{seatEl.classList.remove('show');seatEl.style.transform='';seatEl.style.transition='';seatEl.style.display='none';renderHome(true);const pq=sessionStorage.getItem('pending_qr');if(pq){sessionStorage.removeItem('pending_qr');setTimeout(()=>openArticleByCode(pq),400);}},350);}
+
+function renderHome(fadein){const sd=SCHOOL_DATA[user.school];const total=state.exhibit.filter(Boolean).length+state.lecture.filter(Boolean).length;const imgMap={yonsei:'yonsei.jpg',korea:'korea.gif',skku:'skku.jpg'};document.getElementById('main').innerHTML=`<div class="user-bar"><div style="display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden"><span class="user-name-text">⚔ ${user.name}</span><span class="school-badge ${sd.badgeClass}"><img src="${imgMap[user.school]}" alt="${sd.label}"> ${sd.label} · ${sd.sub}</span></div><button class="btn-home-rpg" onclick="showConfirm()">처음으로</button></div><div class="home-section${fadein?' main-fadein':''}"><div class="home-chapter" id="live-clock">✦ 2026년 07월 02일 00:00:00 ✦</div><div class="home-greeting">예비기자 <em>${user.name}</em>님,<br>환영합니다 ✨</div><div class="home-sub"><em style="color:var(--gold);text-shadow:0 0 6px rgba(255,215,0,0.5);font-style:normal">${getOrCreateNickname()}</em>님이 오기만을 기다렸습니다</div><div class="menu-grid"><div class="menu-card" onclick="openTimetable()"><span class="menu-icon">🧭</span><div class="menu-title">시간표</div><div class="menu-desc">오늘의 일정을 확인하세요</div></div><div class="menu-card quest-card" onclick="renderMain(true)"><span class="menu-icon">⚔️</span><div class="menu-title">미션</div><div class="menu-desc">미션 ${total}/${STAMPS.length+LECTURES.length} 달성</div></div><div class="menu-card skill-card" onclick="openQnA()"><span class="menu-icon">💬</span><div class="menu-title">실시간 Q&A</div><div class="menu-desc">궁금한 점을 질문하세요<br>익명이니까 안심하세요</div></div><div class="menu-card map-card" onclick="openJokbo()"><span class="menu-icon">📜</span><div class="menu-title">채용 족보</div><div class="menu-desc">역대 채용 일정 & 필기 시험 문제</div></div><div class="menu-card scroll-card" onclick="openMemo()"><span class="menu-icon">📝</span><div class="menu-title">메모장</div><div class="menu-desc">나만의 강의 메모<br>내 폰에만 저장돼요</div></div><div class="menu-card" onclick="openInstagram()"><span class="menu-icon">🔮</span><div class="menu-title">채용 인스타그램</div><div class="menu-desc">@donga_recruit</div></div></div></div>`;}
+
+function showConfirm(){document.getElementById('confirm-overlay').classList.add('show');}
+function hideConfirm(){document.getElementById('confirm-overlay').classList.remove('show');}
+
+function renderMain(fadein){const sd=SCHOOL_DATA[user.school];const eC=state.exhibit.filter(Boolean).length,lC=state.lecture.filter(Boolean).length;const imgMap={yonsei:'yonsei.jpg',korea:'korea.gif',skku:'skku.jpg'};let html=`<div class="user-bar"><div style="display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden"><span class="user-name-text">⚔ ${user.name}</span><span class="school-badge ${sd.badgeClass}"><img src="${imgMap[user.school]}" alt="${sd.label}"> ${sd.label} · ${sd.sub}</span></div><button class="btn-home-rpg" onclick="renderHome()">← 홈</button></div><div class="camera-guide"><div style="font-size:20px">🔍</div><div class="camera-guide-text"><strong>기본 카메라로 QR을 찍어보세요!</strong>각 전시물 옆 QR을 찍으면 관련 기사가 나옵니다</div></div><div class="ranking-btn-wrap" style="padding:14px 16px 0"><button class="ranking-btn" onclick="openRanking()">🏆 실시간 순위 보기</button></div><div class="stamp-section"><div class="quest-header"><span class="quest-label-txt">🗺 전시 미션</span><span class="quest-count">${eC} / 8</span></div><div class="pbar"><div class="pfill" style="width:${eC/8*100}%"></div></div><div class="stamp-grid">`;STAMPS.forEach((s,i)=>{const done=state.exhibit[i];html+=`<div class="stamp-cell${done?' done':''}" onclick="${done?`confirmArticle('exhibit',${i})`:`showToast('🔍 아직 발견하지 못했습니다')`}">${ICONS[s.id]}<span class="stamp-num">${i+1}</span></div>`;});html+=`</div><hr class="quest-divider"><div class="quest-header"><span class="quest-label-txt">✨ 강의 미션</span><span class="quest-count">${lC} / 4</span></div><div class="pbar"><div class="pfill gold" style="width:${lC/4*100}%"></div></div><div class="stamp-grid-lec">`;LECTURES.forEach((l,i)=>{const done=state.lecture[i];html+=`<div class="stamp-cell-lec${done?' done':''}" onclick="${done?`showToast('✅ 미션 완료!')`:`showToast('📋 강의 중 QR을 찍어보세요!')`}">${done?'✓ ':''} ${l.label}</div>`;});html+=`</div></div>`;document.getElementById('main').innerHTML=html;}
+
+function saveRanking(){if(!window._db)return;const nickname=getOrCreateNickname();const total=state.exhibit.filter(Boolean).length+state.lecture.filter(Boolean).length;const sd=SCHOOL_DATA[user.school];const uid=(user.name+user.school).replace(/[^a-zA-Z0-9가-힣]/g,'_');window._db.ref('rankings/'+uid).set({nickname,school:user.school,schoolLabel:sd.label+' '+sd.sub,stamps:total,updatedAt:Date.now()});}
+function openArticleByCode(code){const ei=STAMPS.findIndex(s=>s.code===code);const li=LECTURES.findIndex(l=>l.code===code);if(ei>=0){const item=STAMPS[ei];if(!state.exhibit[ei]){state.exhibit[ei]=true;save();saveRanking();}const total=state.exhibit.filter(Boolean).length+state.lecture.filter(Boolean).length;showToast('✨ 미션 완료! 경험치 +100 ('+total+'/'+(STAMPS.length+LECTURES.length)+')');renderStamps();if(total===STAMPS.length+LECTURES.length)setTimeout(showComplete,1000);if(item.link)setTimeout(()=>{const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);if(isIOS){window.location.href=item.link;}else{window.open(item.link,'_blank');}},700);}else if(li>=0){const item=LECTURES[li];if(!state.lecture[li]){state.lecture[li]=true;save();saveRanking();}const total=state.exhibit.filter(Boolean).length+state.lecture.filter(Boolean).length;showToast('✨ 강의 미션 완료! ('+total+'/'+(STAMPS.length+LECTURES.length)+')');renderStamps();if(total===STAMPS.length+LECTURES.length)setTimeout(showComplete,1000);}else{showToast('❓ 알 수 없는 마법진입니다');}}
+function renderStamps(){const main=document.getElementById('main');if(!main)return;const cells=main.querySelectorAll('.stamp-cell');cells.forEach((cell,i)=>{if(state.exhibit[i])cell.classList.add('done');});const lecCells=main.querySelectorAll('.stamp-cell-lec');lecCells.forEach((cell,i)=>{if(state.lecture[i]){cell.classList.add('done');cell.innerHTML='✓ '+LECTURES[i].label;}});}
+function confirmArticle(type,idx){const item=type==='exhibit'?STAMPS[idx]:LECTURES[idx];if(!item.link){showToast('📜 기사가 아직 준비 중입니다');return;}document.getElementById('article-confirm-overlay').classList.add('show');document.getElementById('article-confirm-overlay').dataset.link=item.link;}
+function checkURLQR(){try{const params=new URLSearchParams(window.location.search);const qr=params.get('qr');if(!qr)return;history.replaceState(null,'',window.location.pathname);const saved=load();if(!saved||!saved.user||!saved.user.name){sessionStorage.setItem('pending_qr',qr);}else{user=saved.user;state.exhibit=saved.exhibit||new Array(8).fill(false);state.lecture=saved.lecture||new Array(4).fill(false);renderMain(true);setTimeout(()=>openArticleByCode(qr),300);}}catch(e){}}
+function showComplete(){clearSave();const sd=SCHOOL_DATA[user.school];const now=new Date();const t=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');const imgMap={yonsei:'yonsei.jpg',korea:'korea.gif',skku:'skku.jpg'};document.getElementById('main').innerHTML=`<div class="complete-wrap"><div class="complete-card"><div class="seal">👑</div><div class="c-chapter">✦ 모든 미션 완료 ✦</div><div class="c-title">전설의 용사 탄생!</div><div class="c-sub-title">"이번 생에 반드시 동아의 기자가 되어드리죠"</div><div class="c-div"></div><p class="c-sub">${STAMPS.length+LECTURES.length}개의 미션를 모두 완료했습니다.<br>나가실때 소정의 답례품을 수령해 가세요.</p><div class="c-info"><strong>${user.name}</strong><br><span style="display:inline-flex;align-items:center;gap:6px;margin:4px 0"><img src="${imgMap[user.school]}" style="width:26px;height:26px;border-radius:50%;object-fit:contain;background:white;padding:2px"><span style="color:rgba(255,255,255,0.8)">${sd.label} ${sd.sub}</span></span><br>완료 시각: <strong>${t}</strong></div><button class="btn-confirm" onclick="renderMain()">⚔ 확인</button></div></div>`;}
+function resetAll(){hideConfirm();clearSave();state={exhibit:new Array(8).fill(false),lecture:new Array(4).fill(false)};renderLogin();}
+function openTimetable(){const body=document.getElementById('tt-body');body.innerHTML=TIMETABLE.map(t=>`<div class="tt-card"><div class="tt-card-header" style="flex-direction:column;align-items:flex-start;gap:6px"><span style="font-size:10px;color:var(--gold2);letter-spacing:3px;font-family:'Noto Serif KR',serif;text-shadow:0 0 4px var(--gold2)">✦ ${t.chapter} · ${t.session} ✦</span><span class="tt-time">${t.time}</span></div><div class="tt-card-body"><div class="tt-row"><span class="tt-row-label">발표자</span><span class="tt-row-val">${t.speaker}</span></div>${t.items.length>0?`<div class="tt-row"><span class="tt-row-label">내용</span><span class="tt-row-val">${t.items.join('<br>')}</span></div>`:''}</div></div>`).join('');document.getElementById('timetable-screen').style.display='block';}
+function closeTimetable(){document.getElementById('timetable-screen').style.display='none';}
+function openJokbo(){document.getElementById('jokbo-screen').classList.add('show');renderYearTabs();renderJokboContent(currentYear);}
+function closeJokbo(){document.getElementById('jokbo-screen').classList.remove('show');}
+function renderYearTabs(){const years=Object.keys(JOKBO).sort((a,b)=>b-a);document.getElementById('year-tabs').innerHTML=years.map(y=>`<button class="year-tab${y==currentYear?' active':''}" onclick="selectYear(${y})">${y}년</button>`).join('');}
+function selectYear(year){currentYear=year;renderYearTabs();renderJokboContent(year);}
+function renderJokboContent(year){const data=JOKBO[year];if(!data){document.getElementById('jokbo-content').innerHTML='<div class="exam-empty">데이터 준비 중입니다</div>';return;}const timeline=data.timeline.map(t=>`<div class="timeline-item"><div class="tl-dot">${t.emoji}</div><div class="tl-content"><div class="tl-title">${t.title}</div><div class="tl-date">${t.date}</div></div></div>`).join('');const writingLabel=data.exam.writingLabel||'작문';const examHtml=data.exam.essay==='추후 입력 예정'?`<div class="exam-empty">📜 ${year}년 고서는 아직 발굴되지 않았습니다</div>`:`<div class="exam-card"><span class="exam-badge essay">논술</span><div class="exam-q">${data.exam.essay}</div></div><div class="exam-card"><span class="exam-badge writing">${writingLabel}</span><div class="exam-q">${data.exam.writing}</div></div>`;document.getElementById('jokbo-content').innerHTML=`<div class="jokbo-card"><div class="jokbo-card-title">📅 ${year}년 채용 일정</div><div class="timeline">${timeline}</div></div><div class="jokbo-card"><div class="jokbo-card-title">🏆 최종 입사 인원</div><div class="result-box"><div class="result-num">${data.hired}</div><div class="result-label">명이 동아일보 기자로<br>최종 입사했습니다.</div></div></div><div style="padding:4px 4px 10px;font-family:'Noto Serif KR',serif;font-size:13px;font-weight:700;color:var(--gold);text-shadow:0 0 4px rgba(255,215,0,0.3)">📜 ${year}년 필기시험 문제</div>${examHtml}`;}
+function openQnA(){document.getElementById('qna-screen').classList.add('show');initQnA();setTimeout(()=>{const m=document.getElementById('qna-messages');m.scrollTop=m.scrollHeight;},300);}
+function closeQnA(){document.getElementById('qna-screen').classList.remove('show');if(window._qnaUnsub){window._db.ref('qna').off('value',window._qnaUnsub);window._qnaUnsub=null;}}
+function initQnA(){if(window._qnaUnsub)return;window._qnaUnsub=window._db.ref('qna').on('value',(snapshot)=>{const data=snapshot.val();const container=document.getElementById('qna-messages');if(!container)return;if(!data){container.innerHTML='<div class="qna-empty">질문을 입력하면 실시간으로 답변해드려요</div>';return;}const msgs=Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));container.innerHTML=msgs.map(m=>{const isMine=m.uid===(user.name+user.school);const cls=isMine?'mine':'other';const time=m.ts?new Date(m.ts).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';const nameDiv=!isMine?'<div class="qna-msg-name">'+m.name+'</div>':'';return'<div class="qna-msg '+cls+'">'+nameDiv+m.text+'<div class="qna-msg-time">'+time+'</div></div>';}).join('');container.scrollTop=container.scrollHeight;});}
+function sendQnA(){const input=document.getElementById('qna-input');const text=(input.value||'').trim();if(!text)return;const nickname=getOrCreateNickname();window._db.ref('qna').push({name:nickname,school:user.school,uid:user.name+user.school,text:text,role:'user',ts:Date.now()});input.value='';}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('qna-screen').classList.contains('show'))sendQnA();});
+function openMemo(){document.getElementById('memo-screen').classList.add('show');try{document.getElementById('memo-textarea').value=localStorage.getItem('donga_memo_'+user.name+user.school)||'';}catch(e){}}
+function closeMemo(){document.getElementById('memo-screen').classList.remove('show');}
+let memoTimer=null;
+function autoSaveMemo(){clearTimeout(memoTimer);document.getElementById('memo-saved').textContent='';memoTimer=setTimeout(()=>{try{const val=document.getElementById('memo-textarea').value;localStorage.setItem('donga_memo_'+user.name+user.school,val);document.getElementById('memo-saved').textContent='✦ 두루마리에 기록되었습니다';setTimeout(()=>{document.getElementById('memo-saved').textContent='';},2000);}catch(e){}},800);}
+function openRanking(){document.getElementById('ranking-screen').classList.add('show');loadRanking();}
+function closeRanking(){document.getElementById('ranking-screen').classList.remove('show');}
+function loadRanking(){if(!window._db)return;window._db.ref('rankings').on('value',snapshot=>{const data=snapshot.val()||{};const entries=Object.values(data);entries.sort((a,b)=>b.stamps-a.stamps);const myNick=getOrCreateNickname();const personalList=document.getElementById('personal-list');if(!personalList)return;if(entries.length===0){personalList.innerHTML='<div class="rank-loading">아직 용사가 없습니다</div>';}else{const top20=entries.slice(0,20);const myIdx=entries.findIndex(e=>e.nickname===myNick);const myEntry=myIdx>=20?entries[myIdx]:null;const medals=['🥇','🥈','🥉'];let html=top20.map((e,i)=>{const isMe=e.nickname===myNick;const numClass=i<3?'top'+(i+1):'';return'<div class="rank-item'+(isMe?' me':'')+'"><div class="rank-num '+numClass+'">'+(medals[i]||i+1)+'</div><div style="flex:1;overflow:hidden"><div class="rank-nick">'+e.nickname+(isMe?' (나)':'')+'</div><div class="rank-school">'+e.schoolLabel+'</div></div><div class="rank-stamps">★'+e.stamps+'</div></div>';}).join('');if(myEntry){html+='<div style="text-align:center;color:var(--text3);font-size:12px;padding:6px 0">· · ·</div><div class="rank-item me"><div class="rank-num">'+(myIdx+1)+'</div><div style="flex:1;overflow:hidden"><div class="rank-nick">'+myEntry.nickname+' (나)</div><div class="rank-school">'+myEntry.schoolLabel+'</div></div><div class="rank-stamps">★'+myEntry.stamps+'</div></div>';}personalList.innerHTML=html;}const schoolMap={yonsei:{label:'연세대',color:'#4a90d9',img:'yonsei.jpg',total:0,count:0},korea:{label:'고려대',color:'#e05555',img:'korea.gif',total:0,count:0},skku:{label:'성균관대',color:'#5db85d',img:'skku.jpg',total:0,count:0}};entries.forEach(e=>{if(schoolMap[e.school]){schoolMap[e.school].total+=e.stamps;schoolMap[e.school].count++;}});const schools=Object.entries(schoolMap).map(([k,v])=>({key:k,label:v.label,color:v.color,img:v.img,avg:v.count>0?(v.total/v.count).toFixed(1):0,count:v.count})).sort((a,b)=>b.avg-a.avg);const chart=document.getElementById('school-chart');if(!chart)return;const podiumOrder=schools.length>=3?[schools[1],schools[0],schools[2]]:schools;const blockClass=['podium-rank2','podium-rank1','podium-rank3'];const medals3=schools.length>=3?['🥈','🥇','🥉']:['🥇','🥈','🥉'];chart.innerHTML='<div class="podium-wrap">'+podiumOrder.map((s,i)=>`<div class="podium-item"><div class="podium-medal">${medals3[i]}</div><img class="podium-school-img" src="${s.img}" alt="${s.label}"><div class="podium-block ${blockClass[i]}"><div class="podium-name">${s.label}</div><div class="podium-avg">★ ${s.count>0?s.avg:'-'}</div><div class="podium-count">${s.count>0?s.count+'명':'-'}</div></div></div>`).join('')+'</div>';});}
+function openInstagram(){window.open('https://www.instagram.com/donga_recruit','_blank');}
+window.addEventListener('popstate',function(){if(document.getElementById('qna-screen').classList.contains('show')){closeQnA();history.pushState(null,'',location.href);return;}if(document.getElementById('timetable-screen').style.display==='block'){closeTimetable();history.pushState(null,'',location.href);return;}if(document.getElementById('memo-screen').classList.contains('show')){closeMemo();history.pushState(null,'',location.href);return;}if(document.getElementById('jokbo-screen').classList.contains('show')){closeJokbo();history.pushState(null,'',location.href);return;}if(document.getElementById('ranking-screen').classList.contains('show')){closeRanking();history.pushState(null,'',location.href);return;}history.pushState(null,'',location.href);});
+history.pushState(null,'',location.href);
+function updateClock(){
+  const el=document.getElementById('live-clock');
+  if(!el)return;
+  const now=new Date();
+  const y=now.getFullYear();
+  const mo=String(now.getMonth()+1).padStart(2,'0');
+  const d=String(now.getDate()).padStart(2,'0');
+  const h=String(now.getHours()).padStart(2,'0');
+  const mi=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
+  el.textContent='✦ '+y+'년 '+mo+'월 '+d+'일 '+h+':'+mi+':'+s+' ✦';
+}
+setInterval(updateClock,1000);
+init();
+updateClock();
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
